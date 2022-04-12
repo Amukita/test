@@ -74,4 +74,5 @@ public class WeaponSlotManager : MonoBehaviour
     }
 
     #endregion
-}
+}      
+
