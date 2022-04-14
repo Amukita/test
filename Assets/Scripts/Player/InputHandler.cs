@@ -41,7 +41,7 @@ public class InputHandler : MonoBehaviour
         playerManager = GetComponent<PlayerManager>();
 ;       playerAttacker = GetComponent<PlayerAttacker>();
         playerInventory = GetComponent<PlayerInventory>();
-        cameraHandler = FindObjectOfType<CameraHandler>();
+        cameraHandler = CameraHandler.singleton;
 
     }
 
@@ -123,6 +123,7 @@ public class InputHandler : MonoBehaviour
 
         if (rb_Input)
         {
+            
             if (playerManager.canDoCombo)
             {
                 comboFlag = true;

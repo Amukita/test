@@ -129,9 +129,9 @@ public class AnimatorHandler : AnimatorManager
     {
         if (playerManager.isInteracting == false)
             return;
-
         audioSource.clip = swordSwing;
         audioSource.Play();
+
     }
 
     private void Footsteps()
