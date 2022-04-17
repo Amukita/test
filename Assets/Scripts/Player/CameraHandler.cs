@@ -37,8 +37,12 @@ public class CameraHandler : MonoBehaviour
             CameraHandler.singleton = this;
             DontDestroyOnLoad(gameObject);
         }
+        else
+        {
+            Destroy(gameObject);
+        }
 
-        inputHandler = FindObjectOfType<InputHandler>();
+        inputHandler = GetComponent<InputHandler>();
         singleton = this;
         myTransform = transform;
         defaultPos = cameraTransform.localPosition.z;
@@ -73,8 +77,6 @@ public class CameraHandler : MonoBehaviour
         }
         else
         {
-            float velocity = 0;
-
             Vector3 dir = currentLockOnTarget.position - transform.position;
             dir.Normalize();
             dir.y = 0;
