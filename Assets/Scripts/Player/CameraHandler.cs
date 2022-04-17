@@ -32,6 +32,12 @@ public class CameraHandler : MonoBehaviour
 
     private void Awake()
     {
+        if(CameraHandler.singleton == null)
+        {
+            CameraHandler.singleton = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
         inputHandler = FindObjectOfType<InputHandler>();
         singleton = this;
         myTransform = transform;
