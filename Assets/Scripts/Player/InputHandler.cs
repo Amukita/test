@@ -5,13 +5,12 @@ using UnityEngine;
 public class InputHandler : MonoBehaviour
 {
     PlayerLocomotion playerLocomotion;
-
     
     public float horizontal;
     public float vertical;
     public float moveAmount;
     public float mouseX;
-    public float mouseY;                                               
+    public float mouseY;
 
     public bool rollFlag;
     public bool comboFlag;
@@ -41,12 +40,19 @@ public class InputHandler : MonoBehaviour
         playerManager = GetComponent<PlayerManager>();
 ;       playerAttacker = GetComponent<PlayerAttacker>();
         playerInventory = GetComponent<PlayerInventory>();
-        cameraHandler = CameraHandler.singleton;
+        cameraHandler = FindObjectOfType<CameraHandler>();
 
     }
 
     private void FixedUpdate()
     {
+        float delta = Time.fixedDeltaTime;
+        if (cameraHandler != null)
+        {
+            cameraHandler.FollowTarget(delta);
+            cameraHandler.HandleCameraRotation(delta, mouseX, mouseY);
+        }
+
         
     }
 
@@ -57,8 +63,7 @@ public class InputHandler : MonoBehaviour
             inputActions = new PlayerControls();
             inputActions.PlayerMovement.Movement.performed += inputActions => movementInput = inputActions.ReadValue<Vector2>();
             inputActions.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
-            inputActions.PlayerActions.RB.performed += i => rb_Input = true;
-            inputActions.PlayerActions.RT.performed += i => rt_Input = true;
+
             inputActions.PlayerActions.Run.performed += i => b_Input = true;
             inputActions.PlayerActions.Run.canceled += i => b_Input = false;
             inputActions.PlayerActions.LockOn.performed += i => lockOnInput = true;
@@ -91,9 +96,8 @@ public class InputHandler : MonoBehaviour
 
     private void HandleRollInput(float delta)
     {
-       
-
         b_Input = inputActions.PlayerActions.Run.phase == UnityEngine.InputSystem.InputActionPhase.Performed;
+        sprintFlag = b_Input;
 
         if (b_Input)
         {
@@ -114,7 +118,9 @@ public class InputHandler : MonoBehaviour
 
     private void AttackInput(float delta)
     { 
-        
+        inputActions.PlayerActions.RB.performed += i => rb_Input = true;
+        inputActions.PlayerActions.RT.performed += i => rt_Input = true;
+
         if (rb_Input)
         {
             
@@ -144,8 +150,7 @@ public class InputHandler : MonoBehaviour
         if(lockOnInput && lockOnFlag == false)
         {
             cameraHandler.ClearLockOnTargets();
-            lockOnFlag = false;
-            lockOnFlag = true;
+            lockOnInput = false;
             cameraHandler.HandleLockOn();
             if(cameraHandler.nearestLockOn != null)
             {

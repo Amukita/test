@@ -9,7 +9,6 @@ public class PlayerLocomotion : MonoBehaviour
     InputHandler inputHandler;
     public Vector3 moveDirection;
 
-
     [HideInInspector]
     public Transform myTransform;
     [HideInInspector]
@@ -42,6 +41,9 @@ public class PlayerLocomotion : MonoBehaviour
     [SerializeField]
     float fallSpeed = 45;
 
+    public CapsuleCollider characterCollider;
+    public CapsuleCollider characterCollisionBlocker;
+
 
     void Start()
     {
@@ -55,7 +57,7 @@ public class PlayerLocomotion : MonoBehaviour
 
         playerManager.isGrounded = true;
         ignoreForGroundCheck = ~(1 << 8 | 1 << 11);
-
+        Physics.IgnoreCollision(characterCollider, characterCollisionBlocker, true);
 
     }
 
@@ -66,6 +68,8 @@ public class PlayerLocomotion : MonoBehaviour
 
     private void HandleRotation(float delta)
     {
+     
+
         Vector3 targetDir = Vector3.zero;
         float moveOverride = inputHandler.moveAmount;
 
@@ -88,6 +92,8 @@ public class PlayerLocomotion : MonoBehaviour
 
     public void HandleMovement(float delta)
     {
+     
+
         if (inputHandler.rollFlag)
             return;
 
@@ -136,6 +142,8 @@ public class PlayerLocomotion : MonoBehaviour
 
     public void HandleRollingAndSprinting(float delta)
     {
+        
+
         if (animatorHandler.anim.GetBool("isInteracting"))
             return;
 
