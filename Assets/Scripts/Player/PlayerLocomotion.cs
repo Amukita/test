@@ -14,8 +14,6 @@ public class PlayerLocomotion : MonoBehaviour
     [HideInInspector]
     public AnimatorHandler animatorHandler;
 
-
-
     public new Rigidbody rigidbody;
     public GameObject normalCamera;
 
