@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba87dcb85d79cbb4b98669475e65687c, type: 3}
+  m_Name: Unarmed
+  m_EditorClassIdentifier: 
+  itemIcon: {fileID: 0}
+  itemName: FistWeapon
+  modelPrefab: {fileID: 5798398016281357305, guid: 5bea0fbc8063e9d4db0dbb54e7089fdb, type: 3}
+  isUnarmed: 1
+  Light_Attack: Punching
+  Heavy_Attack: Cross Punch
+  Light_Attack_1: Cross Punch
+  baseStamina: 15
+  lightAttackMultiplier: 1
+  heavyAttackMultiplier: 2

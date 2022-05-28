@@ -46,7 +46,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5295110465956840895
 Transform:
   m_ObjectHideFlags: 0
@@ -138,10 +138,10 @@ BoxCollider:
   m_GameObject: {fileID: 4774008584268769829}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.36108834, z: 0.5343676}
-  m_Center: {x: -0.0000000672672, y: -0.031549573, z: -0.03185288}
+  m_Size: {x: 0.25542593, y: 0.35175058, z: 0.19999997}
+  m_Center: {x: 0.047713026, y: 0.10587565, z: -0.059999976}
 --- !u!114 &7435681262631846596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,4 +154,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12350c01196a6304097c1b2a49db5062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentWeaponDamage: 25
+  currentWeaponDamage: 2

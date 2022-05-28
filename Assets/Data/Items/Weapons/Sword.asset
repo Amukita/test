@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba87dcb85d79cbb4b98669475e65687c, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 5790d28092f48654fb6f5c1cabf94da2, type: 3}
   itemName: Sword
   modelPrefab: {fileID: 2867191769778139744, guid: f07fbbf0193105748a19d0cb64fc5098, type: 3}
   isUnarmed: 0
   Light_Attack: Light_Attack
   Heavy_Attack: Heavy_Attack
   Light_Attack_1: Light_Attack_1
+  baseStamina: 15
+  lightAttackMultiplier: 1
+  heavyAttackMultiplier: 2
