@@ -8,6 +8,9 @@ public class PlayerLocomotion : MonoBehaviour
     Transform cameraObject;
     InputHandler inputHandler;
     public Vector3 moveDirection;
+    CameraHandler cameraHandler;
+    PlayerStats playerStats;
+
 
     [HideInInspector]
     public Transform myTransform;
@@ -21,7 +24,7 @@ public class PlayerLocomotion : MonoBehaviour
     [SerializeField]
     float groundDetectionRayStart = 0.5f;
     [SerializeField]
-    float minimumDistanceNeedToFall = 1f;
+    float minimumDistanceNeedToFall = 5f;
     [SerializeField]
     float groundDirectionRayDistance = 0.2f;
     LayerMask ignoreForGroundCheck;
@@ -42,13 +45,18 @@ public class PlayerLocomotion : MonoBehaviour
     public CapsuleCollider characterCollider;
     public CapsuleCollider characterCollisionBlocker;
 
-
-    void Start()
+    private void Awake()
     {
+        cameraHandler = FindObjectOfType<CameraHandler>();
         playerManager = GetComponent<PlayerManager>();
+        playerStats = GetComponent<PlayerStats>();
         rigidbody = GetComponent<Rigidbody>();
         inputHandler = GetComponent<InputHandler>();
         animatorHandler = GetComponentInChildren<AnimatorHandler>();
+    }
+    void Start()
+    {
+        
         cameraObject = Camera.main.transform;
         myTransform = transform;
         animatorHandler.Initialize();
@@ -64,33 +72,37 @@ public class PlayerLocomotion : MonoBehaviour
     Vector3 normalVector;
     Vector3 targetPosition;
 
-    private void HandleRotation(float delta)
+    public void HandleRotation(float delta)
     {
-     
 
-        Vector3 targetDir = Vector3.zero;
-        float moveOverride = inputHandler.moveAmount;
+        if (animatorHandler.canRotate)
+        {
+            Vector3 targetDir = Vector3.zero;
+            float moveOverride = inputHandler.moveAmount;
 
-        targetDir = cameraObject.forward * inputHandler.vertical;
-        targetDir += cameraObject.right * inputHandler.horizontal;
+            targetDir = cameraObject.forward * inputHandler.vertical;
+            targetDir += cameraObject.right * inputHandler.horizontal;
 
-        targetDir.Normalize();
-        targetDir.y = 0;
+            targetDir.Normalize();
+            targetDir.y = 0;
 
-        if (targetDir == Vector3.zero)
-            targetDir = myTransform.forward;
+            if (targetDir == Vector3.zero)
+                targetDir = myTransform.forward;
 
-        float rs = rotationSpeed;
+            float rs = rotationSpeed;
 
-        Quaternion tr = Quaternion.LookRotation(targetDir);
-        Quaternion targetRotation = Quaternion.Slerp(myTransform.rotation, tr, rs * delta);
+            Quaternion tr = Quaternion.LookRotation(targetDir);
+            Quaternion targetRotation = Quaternion.Slerp(myTransform.rotation, tr, rs * delta);
 
-        myTransform.rotation = targetRotation;
+            myTransform.rotation = targetRotation;
+        }
+
+
     }
 
     public void HandleMovement(float delta)
     {
-     
+       
 
         if (inputHandler.rollFlag)
             return;
@@ -132,17 +144,15 @@ public class PlayerLocomotion : MonoBehaviour
 
         animatorHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0, playerManager.isSprinting);
 
-        if (animatorHandler.canRotate)
-        {
-            HandleRotation(delta);
-        }
     }
 
     public void HandleRollingAndSprinting(float delta)
     {
         
-
         if (animatorHandler.anim.GetBool("isInteracting"))
+            return;
+
+        if (playerStats.currentStamina <= 0)
             return;
 
         if (inputHandler.rollFlag)
@@ -176,7 +186,7 @@ public class PlayerLocomotion : MonoBehaviour
         if (playerManager.isInAir)
         {
             rigidbody.AddForce(-Vector3.up * fallSpeed);
-            rigidbody.AddForce(moveDirection * fallSpeed / 10f);
+            rigidbody.AddForce(moveDirection * fallSpeed / 8f);
         }
 
         Vector3 dir = moveDirection;

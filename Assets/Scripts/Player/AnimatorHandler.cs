@@ -11,21 +11,21 @@ public class AnimatorHandler : AnimatorManager
     int horizontal;
     public bool canRotate;
     public bool isSprinting;
-    
-    private AudioSource audioSource;
     public AudioClip swordSwing;
     public AudioClip footSteps;
-    
+    public AudioSource audioSource;
+
 
     public void Initialize()
     {
+        audioSource = GetComponent<AudioSource>();
         playerManager = GetComponentInParent<PlayerManager>();
         anim = GetComponent<Animator>();
         inputHandler = GetComponentInParent<InputHandler>();
         playerLocomotion = GetComponentInParent<PlayerLocomotion>();
         vertical = Animator.StringToHash("Vertical");
         horizontal = Animator.StringToHash("Horizontal");
-        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = 0.5f;
     }
 
     public void UpdateAnimatorValues(float verticalMovement, float horizontalMovement, bool isSprinting)
@@ -124,8 +124,7 @@ public class AnimatorHandler : AnimatorManager
         Vector3 velocity = deltaPosition / delta;
         playerLocomotion.rigidbody.velocity = velocity;
     }
-
-    private void SwordSwing()
+    public void SwordSwing()
     {
         if (playerManager.isInteracting == false)
             return;
@@ -134,14 +133,12 @@ public class AnimatorHandler : AnimatorManager
 
     }
 
-    private void Footsteps()
+    public void Footsteps()
     {
         if (playerManager.isInteracting == true)
             return;
         audioSource.clip = footSteps;
         audioSource.Play();
     }
-
-    
 
 }

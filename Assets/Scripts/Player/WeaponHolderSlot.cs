@@ -8,6 +8,8 @@ public class WeaponHolderSlot : MonoBehaviour
     public bool isLeftHandSlot;
     public bool isRightHandSlot;
 
+    GameObject model;
+
     public GameObject currentWeaponModel;
 
     public void UnloadWeapon()
@@ -20,11 +22,12 @@ public class WeaponHolderSlot : MonoBehaviour
 
     public void UnloadWeaponAndDestroy()
     {
-        if(currentWeaponModel != null)
+        if (currentWeaponModel != null)
         {
-            Destroy(currentWeaponModel);
+            Destroy(model);
         }
     }
+    
 
     public void LoadWeaponModel(WeaponItem weaponItem)
     {
@@ -36,7 +39,7 @@ public class WeaponHolderSlot : MonoBehaviour
             return;
         }
 
-        GameObject model = Instantiate(weaponItem.modelPrefab) as GameObject;
+         model = Instantiate(weaponItem.modelPrefab);
         if (model != null)
         {
             if (parentOverride != null)
@@ -57,5 +60,7 @@ public class WeaponHolderSlot : MonoBehaviour
         currentWeaponModel = model;
 
     }
+
+    
 
 }

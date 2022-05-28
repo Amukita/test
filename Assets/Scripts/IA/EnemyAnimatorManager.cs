@@ -6,6 +6,7 @@ public class EnemyAnimatorManager : AnimatorManager
 {
     EnemyManager enemyManager;
 
+    public AudioClip swordSwing;
     public AudioClip monsterDamaged;
     private AudioSource audioSource;
 
@@ -14,6 +15,7 @@ public class EnemyAnimatorManager : AnimatorManager
         anim = GetComponent<Animator>();
         enemyManager = GetComponentInParent<EnemyManager>();
         audioSource = GetComponent<AudioSource>();
+        audioSource.volume = 0.5f;
 
     }
 
@@ -25,11 +27,19 @@ public class EnemyAnimatorManager : AnimatorManager
         deltaPosition.y = 0;
         Vector3 velocity = deltaPosition / delta;
         enemyManager.enemyRigidbody.velocity = velocity;
+        
     }
 
-    private void MonsterSound()
+    public void MonsterSound()
     {
         audioSource.clip = monsterDamaged;
         audioSource.Play();
     }
+
+    public void AttackSound()
+    {
+        audioSource.clip = swordSwing;
+        audioSource.Play();
+    }
+
 }

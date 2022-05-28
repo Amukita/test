@@ -7,12 +7,18 @@ using UnityEngine.UI;
 public class LevelChanger : MonoBehaviour
 {
     public Animator anim;
-    
 
+    
     public void PlayGame()
     {
         StartCoroutine(LoadGame());
+
         
+    }
+
+    public void ExitToMenu()
+    {
+        StartCoroutine(BackToMenu());
     }
 
     IEnumerator LoadGame()
@@ -23,8 +29,17 @@ public class LevelChanger : MonoBehaviour
         anim.SetTrigger("FadeIn");
     }
 
+    IEnumerator BackToMenu()
+    {
+        anim.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(0);
+        anim.SetTrigger("FadeIn");
+    }
     public void QuitGame()
     {
         Application.Quit();
     }
+
+    
 }
